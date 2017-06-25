@@ -10,6 +10,7 @@ import ScrollableTabView ,{ScrollableTabBar} from 'react-native-scrollable-tab-v
 
 import NavigationBar from '../common/NavigationBar'
 import DataRepository from '../common/DataRepository'
+import ListItem from './ListItem'
 
 const URL='https://api.douban.com/v2/movie/'
 
@@ -75,7 +76,7 @@ class PopularTab extends Component{
     return URL + key;
   }
   renderRow(data){
-    return <Text>{data.title}</Text>
+    return <ListItem data={data}/>
   }
   render() {
     return <View style={{flex:1}}>
