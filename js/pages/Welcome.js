@@ -13,7 +13,7 @@ export default class Welcome extends Component {
       .props
       .navigator
       .resetTo({component: Home})
-  }, 500)
+  }, 1000)
 }
 componentWilllUnmount() {
   this.timer && clearTimeout(this.timer);

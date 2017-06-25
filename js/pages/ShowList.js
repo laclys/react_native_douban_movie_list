@@ -76,7 +76,9 @@ class PopularTab extends Component{
     return URL + key;
   }
   renderRow(data){
-    return <ListItem data={data}/>
+    return <ListItem data={data}
+      type={this.props.tabLabel}
+    />
   }
   render() {
     return <View style={{flex:1}}>
