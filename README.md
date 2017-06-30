@@ -1,5 +1,5 @@
 # react_native_douban_movie_list
-a simple RN Demo based on douban v2 API
+a simple RN Demo based on douban v2 API （开发中~）
 
 ### 
 
