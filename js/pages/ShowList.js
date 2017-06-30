@@ -8,9 +8,10 @@ import {
 } from 'react-native';
 import ScrollableTabView ,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
-import NavigationBar from '../common/NavigationBar'
-import DataRepository from '../common/DataRepository'
-import ListItem from './ListItem'
+import NavigationBar from '../common/NavigationBar';
+import DataRepository from '../common/DataRepository';
+import ListItem from './ListItem';
+import ItemDetail from './ItemDetail'
 
 const URL='https://api.douban.com/v2/movie/'
 
@@ -22,7 +23,7 @@ export default class ShowList extends Component {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          title={'List'}
+          title={'Movie_List'}
           style={{backgroundColor:'#6495ED'}}
         />
         <ScrollableTabView
@@ -32,14 +33,15 @@ export default class ShowList extends Component {
           tabBarUnderlineStyle={{backgroundColor:'mintcream',height:2}}
           renderTabBar={()=><ScrollableTabBar/>}
         > 
-          <PopularTab url_name="in_theaters" tabLabel="正在上映">正在上映</PopularTab>
-          <PopularTab url_name="coming_soon" tabLabel="即将上映">即将上映</PopularTab>
-          <PopularTab url_name="top250" tabLabel="Top250">Top250</PopularTab>
+          <PopularTab url_name="in_theaters" tabLabel="正在上映" {...this.props}>正在上映</PopularTab>
+          <PopularTab url_name="coming_soon" tabLabel="即将上映" {...this.props}>即将上映</PopularTab>
+          <PopularTab url_name="top250" tabLabel="Top250" {...this.props}>Top250</PopularTab>
         </ScrollableTabView>
     </View>
     );
   }
 }
+// tab组件
 class PopularTab extends Component{
     constructor(props) {
     super(props);
@@ -75,9 +77,21 @@ class PopularTab extends Component{
   genUrl(key){
     return URL + key;
   }
+  
+  onSelect(item) {
+    this.props.navigator.push({
+      component:ItemDetail,
+      params:{
+        item:item,
+        ...this.props
+      }
+    })
+  }
+
   renderRow(data){
     return <ListItem data={data}
       type={this.props.tabLabel}
+      onSelect={()=>this.onSelect(data)}
     />
   }
   render() {

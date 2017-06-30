@@ -6,7 +6,9 @@ export default class ListItem extends Component {
     super(props);
   }
   render() {
-    return <TouchableOpacity style={styles.container}>
+    return <TouchableOpacity style={styles.container}
+      onPress={this.props.onSelect}
+    >
       <View style={styles.row}>
         <Image
           style={{

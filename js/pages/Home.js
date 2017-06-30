@@ -14,7 +14,7 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ShowList/>
+        <ShowList {...this.props}/>
       </View>
     );
   }
