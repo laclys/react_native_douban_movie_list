@@ -62,15 +62,33 @@ class PopularTab extends Component{
     })
     let url=this.genUrl(this.props.url_name);
     console.log('api:'+url);
-    this.dataRepository.fetchNetRepository(url)
+    this.dataRepository.fetchRepository(url)
       .then(result=>{
+        let items=result && result.items ? result.items : result ? result : [];
+        console.log(items);
         this.setState({
-          dataSource:this.state.dataSource.cloneWithRows(result.subjects),
+          dataSource:this.state.dataSource.cloneWithRows(items),
           isLoading:false,
-        })
+        });
+        if (result && result.update_date && !this.dataRepository.checkDate(result.update_date))
+        {
+          return this.dataRepository.fetchNetRepository(url);
+        }else{
+          console.log('cache')
+        }
       })
-      .catch(error=>{
-        console.log(error);
+      .then((items)=> {
+          if (!items || items.length === 0)return;
+          this.setState({
+              dataSource: this.state.dataSource.cloneWithRows(items),
+          });
+          console.log('net')
+      })
+      .catch(error=> {
+          console.log(error);
+          this.setState({
+              isLoading: false
+          });
       })
   }
   // 拼接url
