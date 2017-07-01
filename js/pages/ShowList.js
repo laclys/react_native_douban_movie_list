@@ -5,6 +5,7 @@ import {
   View,
   ListView,
   RefreshControl,
+  DeviceEventEmitter
 } from 'react-native';
 import ScrollableTabView ,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
@@ -75,6 +76,7 @@ class PopularTab extends Component{
           return this.dataRepository.fetchNetRepository(url);
         }else{
           console.log('cache')
+          DeviceEventEmitter.emit('showToast','从缓存获取数据')
         }
       })
       .then((items)=> {
@@ -82,7 +84,7 @@ class PopularTab extends Component{
           this.setState({
               dataSource: this.state.dataSource.cloneWithRows(items),
           });
-          console.log('net')
+          DeviceEventEmitter.emit('showToast','从网络获取数据')
       })
       .catch(error=> {
           console.log(error);
